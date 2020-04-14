@@ -5,3 +5,24 @@
 .price {
   font-size: 2rem;
 }
+
+.course {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.course h1 {
+  margin-bottom: 2rem;
+}
+
+.course img {
+  display: block;
+  max-width: 600px;
+  height: auto;
+}
+
+.course .price.big {
+  font-size: 2.5rem;
+}
