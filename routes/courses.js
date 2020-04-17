@@ -4,7 +4,7 @@ const Course = require('../models/courses');
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const courses = await Course.getAll();
+  const courses = await Course.find();
 
   res.render('courses', {
     title: 'Курсы',
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const course = await Course.getById(req.params.id);
+  const course = await Course.findById(req.params.id);
   res.render('course', {
     layout: 'empty',
     title: `Курс ${course.title}`,
@@ -27,7 +27,7 @@ router.get('/:id/edit', async (req, res) => {
     return res.redirect('/');
   }
 
-  const course = await Course.getById(req.params.id);
+  const course = await Course.findById(req.params.id);
 
   res.render('course-edit', {
     title: `Редактировать ${course.title}`,
@@ -36,7 +36,7 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 router.post('/edit', async (req, res) => {
-  await Course.update(req.body);
+  await Course.findByIdAndUpdate(req.body.id, req.body);
 
   res.redirect('/courses');
 });
