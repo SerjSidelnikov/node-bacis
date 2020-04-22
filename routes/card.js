@@ -3,6 +3,19 @@ const Courses = require('../models/courses');
 
 const router = Router();
 
+function mapCartItems(cart) {
+  return cart.items.map((c) => ({
+    ...c.courseId._doc,
+    count: c.count,
+  }));
+}
+
+function computePrice(courses) {
+  return courses.reduce((acc, course) => {
+    return acc += course.price * course.count;
+  }, 0);
+}
+
 router.post('/add', async (req, res) => {
   const course = await Courses.findById(req.body.id);
   await req.user.addToCart(course);
@@ -11,16 +24,18 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  // const card = await Card.fetch();
+  const user = await req.user
+    .populate('cart.items.courseId')
+    .execPopulate();
 
-  // res.render('card', {
-  //   title: 'Корзина',
-  //   isCard: true,
-  //   courses: card.courses,
-  //   price: card.price,
-  // });
+  const courses = mapCartItems(user.cart);
 
-  res.json({test: true});
+  res.render('card', {
+    title: 'Корзина',
+    isCard: true,
+    courses,
+    price: computePrice(courses),
+  });
 });
 
 router.delete('/remove/:id', async (req, res) => {
