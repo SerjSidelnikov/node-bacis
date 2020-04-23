@@ -27,15 +27,6 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 
-app.use(async (req, res, next) => {
-  try {
-    req.user = await User.findById('5e99d7219d896f058304a2a4');
-    next();
-  } catch (e) {
-    console.log(e);
-  }
-});
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -64,17 +55,17 @@ async function start() {
       useFindAndModify: false,
     });
 
-    const candidate = await User.findOne();
+    // const candidate = await User.findOne();
 
-    if (!candidate) {
-      const user = new User({
-        email: 'serj@mail.com',
-        name: 'Serj',
-        cart: {items: []},
-      });
+    // if (!candidate) {
+    //   const user = new User({
+    //     email: 'serj@mail.com',
+    //     name: 'Serj',
+    //     cart: {items: []},
+    //   });
 
-      await user.save();
-    }
+    //   await user.save();
+    // }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
