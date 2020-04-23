@@ -62,3 +62,5 @@ if (cart) {
     }
   });
 }
+
+window.M.Tabs.init(document.querySelectorAll('.tabs'));
