@@ -44,3 +44,12 @@
 .auth h2 {
   margin-bottom: 3rem;
 }
+
+.alert {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  color: red;
+  background: rgba(255, 0, 0, 0.3);
+  text-align: center;
+  border-radius: 10px;
+}
