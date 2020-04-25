@@ -6,14 +6,19 @@ const auth = require('../middleware/auth');
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const courses = await Course.find()
-    .populate('userId', 'email name');
+  try {
+    const courses = await Course.find()
+      .populate('userId', 'email name');
 
-  res.render('courses', {
-    title: 'Курсы',
-    isCourses: true,
-    courses,
-  });
+    res.render('courses', {
+      title: 'Курсы',
+      isCourses: true,
+      userId: req.user ? req.user._id.toString() : null,
+      courses,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -30,12 +35,20 @@ router.get('/:id/edit', auth, async (req, res) => {
     return res.redirect('/');
   }
 
-  const course = await Course.findById(req.params.id);
+  try {
+    const course = await Course.findById(req.params.id);
 
-  res.render('course-edit', {
-    title: `Редактировать ${course.title}`,
-    course,
-  });
+    if (course.userId.toString() !== req.user._id.toString()) {
+      return res.redirect('/courses');
+    }
+
+    res.render('course-edit', {
+      title: `Редактировать ${course.title}`,
+      course,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.post('/edit', auth, async (req, res) => {
