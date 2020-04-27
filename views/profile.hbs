@@ -2,11 +2,17 @@
 
 <div class="row">
   <div class="col s6">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRpQsO5KM-BFHxK-Ve4wIh4j2gALq8FUDgZFpS12o713FoWXKke&usqp=CAU" alt="" class="avatar">
+    {{#if user.avatarUrl}}
+      <img src="/{{user.avatarUrl}}" alt="{{user.name}}" class="avatar">
+    {{else}}
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRpQsO5KM-BFHxK-Ve4wIh4j2gALq8FUDgZFpS12o713FoWXKke&usqp=CAU"
+        alt="" class="avatar">
+    {{/if}}
   </div>
 
   <div class="col s6">
-    <form action="/profile" method="POST">
+    <form action="/profile" method="POST" enctype="multipart/form-data">
       <p>Ваш email: <b>{{user.email}}</b></p>
 
       <div class="input-field">
