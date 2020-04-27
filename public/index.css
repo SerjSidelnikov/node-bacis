@@ -53,3 +53,10 @@
   text-align: center;
   border-radius: 10px;
 }
+
+.avatar {
+  display: block;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+}
